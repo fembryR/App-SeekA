@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { MenuController } from '@ionic/angular';
+
 
 @Component({
   selector: 'app-home',
@@ -6,7 +8,15 @@ import { Component } from '@angular/core';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+  username: string = '';
 
-  constructor() {}
+  constructor(private menucontroller: MenuController) { }
+
+  ngOnInit() {
+   this.username = localStorage.getItem('usuarioActual') || 'Invitado';
+  }
+  mostrarMenu(){
+    this.menucontroller.open('first');
+  }
 
 }

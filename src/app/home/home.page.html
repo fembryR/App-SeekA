@@ -1,20 +1,30 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Blank
+    <ion-title style="text-align: center;">
+      Bienvenido
     </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="mostrarMenu()">
+        <ion-icon slot="end" name="menu-outline" size="large" color="dark"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
+  
 </ion-header>
+
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
+      <ion-title size="large">Inicio</ion-title>
     </ion-toolbar>
   </ion-header>
 
   <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+    <h1>Bienvenido, {{ username }}</h1>
+    <p>Gracias por usar nuestra aplicación para descubrir el arte urbano y los tesoros que esconde la ciudad.</p>
   </div>
+
+
+
 </ion-content>
