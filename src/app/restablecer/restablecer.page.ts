@@ -13,8 +13,8 @@ export class RestablecerPage implements OnInit {
 
   constructor(private router: Router, private alertController: AlertController) { }
 
-  async recuperar(){
-    if(!this.username){
+  async recuperar() {
+    if (!this.username) {
       const alert = await this.alertController.create({
         header: 'Error',
         message: 'Por favor, ingrese su nombre de usuario',
@@ -23,8 +23,8 @@ export class RestablecerPage implements OnInit {
       await alert.present();
       return;
     }
-  
-     // Convierte el nombre de usuario a minúsculas para evitar problemas de capitalización
+
+    // Convierte el nombre de usuario a minúsculas para evitar problemas de capitalización
     const normalizedUsername = this.username.toLowerCase();
     const storedUser = localStorage.getItem(normalizedUsername);
 
@@ -32,55 +32,20 @@ export class RestablecerPage implements OnInit {
       // Usuario no encontrado
       const alert = await this.alertController.create({
         header: 'Usuario no encontrado',
-        message: 'No se encontró el usuario en el LocalStorage.',
+        message: 'No se encontró el usuario.',
         buttons: ['Aceptar']
       });
       await alert.present();
     } else {
-      // Usuario encontrado, solicita nueva contraseña
-      const alert = await this.alertController.create({
-        header: 'Actualizar Contraseña',
-        inputs: [
-          {
-            name: 'newPassword',
-            type: 'password',
-            placeholder: 'Nueva Contraseña'
-          }
-        ],
-        buttons: [
-          {
-            text: 'Cancelar',
-            role: 'cancel'
-          },
-          {
-            text: 'Aceptar',
-            handler: (data) => {
-              if (data.newPassword) {
-                this.actualizarContraseña(normalizedUsername, data.newPassword);
-              } else {
-                this.mostrarError('Por favor, ingrese una nueva contraseña.');
-              }
-            }
-          }
-        ]
-      });
-      await alert.present();
-    }
-  }
-
-  async actualizarContraseña(username: string, newPassword: string) {
-    const storedUser = localStorage.getItem(username);
-    if (storedUser) {
-      let userData = JSON.parse(storedUser);
-      userData.password = newPassword;
-      localStorage.setItem(username, JSON.stringify(userData));
-
+      // Usuario encontrado, redirige a la página de login
       const alert = await this.alertController.create({
         header: 'Éxito',
-        message: 'Contraseña actualizada exitosamente.',
+        message: 'Usuario encontrado. Redirigiendo a la página de login.',
         buttons: ['Aceptar']
       });
       await alert.present();
+
+      // Redirigir a la página de login
       this.router.navigate(['/login']);
     }
   }
@@ -88,14 +53,12 @@ export class RestablecerPage implements OnInit {
   async mostrarError(message: string) {
     const alert = await this.alertController.create({
       header: 'Error',
-      message,
+      message: message,
       buttons: ['Aceptar']
     });
     await alert.present();
   }
 
-  
-  ngOnInit() {
-  }
-}
+  ngOnInit() { }
 
+}

@@ -17,16 +17,17 @@
       <ion-card-title>Restablecer Contraseña</ion-card-title>
     </ion-card-header>
     <ion-card-content>
+      <!-- Formulario para restablecer la contraseña -->
       <form (ngSubmit)="recuperar()">
         <ion-item>
           <ion-label position="floating">Nombre de Usuario</ion-label>
+          <!-- ngModel bidireccional para vincular el input al campo 'username' -->
           <ion-input [(ngModel)]="username" name="username" required></ion-input>
         </ion-item>
         <br>
+        <!-- Botón para enviar el formulario y recuperar la contraseña -->
         <ion-button expand="full" type="submit">Recuperar</ion-button>
       </form>
     </ion-card-content>
   </ion-card>
 </ion-content>
-
-  
