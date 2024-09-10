@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
+import {  Router } from '@angular/router';
 
 interface Menu{
   icon: string;
   name: string;
   redirectTo: string;
+  action?: () => void;
 }
 
 @Component({
@@ -19,11 +21,27 @@ export class AppComponent {
       redirectTo: '/home' 
     },
     {
+      icon: "id-card-outline",
+      name: "Recuperar",
+      redirectTo: '/restablecer'
+    },
+    {
       icon: "log-out-outline",
       name: "Log-Out",
-      redirectTo: '/login'
+      action: () => this.logout() //asocia la accion a cierre de sesion
+      ,
+      redirectTo: ''
     }
-  ]
+  ];
 
-  constructor() {}
+  constructor(public router: Router) {}
+
+  logout() {
+
+    localStorage.removeItem('usuario');
+    localStorage.removeItem('usuarioActual');
+
+    this.router.navigate(['/login']);
+
+  }
 }

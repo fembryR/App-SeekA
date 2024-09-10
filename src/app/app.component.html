@@ -2,7 +2,7 @@
 
   <ion-menu contentId="main" menuId="first" side="end" type="overlay">
     <ion-header>
-      <ion-toolbar color="tertiary">
+      <ion-toolbar color="primary">
         <ion-icon slot="end" name="earth-outline" size="large" style="padding-left: 15px;"></ion-icon>
         <ion-title>Menú</ion-title>
       </ion-toolbar>
@@ -10,7 +10,7 @@
     <ion-content>
       <ion-list>
         <ion-menu-toggle *ngFor="let m of menu">
-          <ion-item [routerLink]="m.redirectTo" detail="true">
+          <ion-item (click)="m.action ? m.action() : router.navigate([m.redirectTo])" detail="true">
             <ion-icon slot="end" [name]="m.icon"></ion-icon>
             <ion-label>{{m.name}}</ion-label>
           </ion-item>

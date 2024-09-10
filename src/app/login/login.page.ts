@@ -12,15 +12,11 @@ export class LoginPage implements OnInit {
 
   formularioLogin: FormGroup;
 
-  username: string = '';
-  password: string = '';
-
-
   constructor(public fb: FormBuilder, public alertController: AlertController, private router: Router) { 
 
     this.formularioLogin = this.fb.group({
-      'nombre': new FormControl("",Validators.required),
-      'password': new FormControl("",Validators.required)
+      nombre: new FormControl("", Validators.required),
+      password: new FormControl("", Validators.required)
   })
 
 }
@@ -31,32 +27,48 @@ export class LoginPage implements OnInit {
     this.router.navigate(['/registro']);
   }
 
-  async ingresar() {
-    const f = this.formularioLogin.value;
+  restablecer(){
+    this.router.navigate(['/restablecer']);
+  }
 
-    const usuarioString = localStorage.getItem('usuario');
-    if (!usuarioString) {
+  async ingresar() {
+    if (this.formularioLogin.invalid) {
       const alert = await this.alertController.create({
-        header: 'Usuario no encontrado',
-        message: 'No existe un usuario registrado en el sistema.',
+        header: 'Datos incompletos',
+        message: 'Por favor, complete todos los campos.',
         buttons: ['Aceptar']
       });
       await alert.present();
       return;
     }
+
+    const { nombre, password } = this.formularioLogin.value;
+    const normalizedUsername = nombre.toLowerCase(); // Normaliza el nombre del usuario
+    const usuarioString = localStorage.getItem(normalizedUsername);
+
+    if (!usuarioString) {
+      const alert = await this.alertController.create({
+        header: 'Usuario no encontrado',
+        message: 'No se encontró el usuario.',
+        buttons: ['Aceptar']
+      });
+      await alert.present();
+      return;
+    }
+
     const usuario = JSON.parse(usuarioString);
 
-    if (usuario.nombre === f.nombre && usuario.password === f.password) {
+    if (usuario.password === password) {
       console.log('Ingresado');
 
-      localStorage.setItem('usuarioActual', f.nombre);
-      console.log('Nombre guardado en localStorage:', f.nombre);
+      localStorage.setItem('usuarioActual', normalizedUsername);
+      console.log('Nombre guardado en localStorage:', normalizedUsername);
 
       this.router.navigate(['/home']);
     } else {
       const alert = await this.alertController.create({
         header: 'Datos incorrectos',
-        message: 'Los datos que ingresaste son incorrectos.',
+        message: 'La contraseña es incorrecta.',
         buttons: ['Aceptar']
       });
       await alert.present();

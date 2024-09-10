@@ -57,13 +57,13 @@ export class RegistroPage implements OnInit {
     }
 
     const f = this.formularioRegistro.value;
-
+    const nombre = f.nombre.toLowerCase(); //Normaliza el nombre del usuario
     const usuario = {
-      nombre: f.nombre,
+      nombre: nombre,
       password: f.password
     };
 
-    localStorage.setItem('usuario', JSON.stringify(usuario));
+    localStorage.setItem(nombre, JSON.stringify(usuario));
     console.log('Usuario registrado:', usuario);
 
     //Registro exitoso
