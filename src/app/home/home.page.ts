@@ -1,22 +1,28 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuController } from '@ionic/angular';
-
+import { MenuController, NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage {
+export class HomePage implements OnInit {
   username: string = '';
 
-  constructor(private menucontroller: MenuController) { }
+  constructor(
+    private menuController: MenuController,
+    private navController: NavController
+  ) {}
 
   ngOnInit() {
-   this.username = localStorage.getItem('usuarioActual') || 'Invitado';
-  }
-  mostrarMenu(){
-    this.menucontroller.open('first');
+    this.username = localStorage.getItem('usuarioActual') ?? '';
+    if (!this.username) {
+      // Si no hay usuario en localStorage, redirige a la página de login
+      this.navController.navigateRoot('/login');
+    }
   }
 
+  mostrarMenu() {
+    this.menuController.open('first');
+  }
 }

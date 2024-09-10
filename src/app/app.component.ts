@@ -44,4 +44,8 @@ export class AppComponent {
     this.router.navigate(['/login']);
 
   }
+
+  initializeApp(){
+    this.router.navigateByUrl('splash');
+  }
 }

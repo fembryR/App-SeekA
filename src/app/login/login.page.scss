@@ -3,3 +3,18 @@
     justify-content: center;
     
 }
+
+.SeekAlogo{
+    position: relative;
+    margin-top: 20px;
+    width: 50%;
+    height: auto;
+    background: url('/assets/SeekAlogo.png') no-repeat center/cover;
+    background-size: cover;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    height: 10vh;
+    z-index: -1;
+}
+

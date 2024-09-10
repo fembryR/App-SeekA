@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup,FormControl,Validators,FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController, AnimationController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -11,8 +11,10 @@ import { AlertController } from '@ionic/angular';
 export class LoginPage implements OnInit {
 
   formularioLogin: FormGroup;
+  animation: any;
 
-  constructor(public fb: FormBuilder, public alertController: AlertController, private router: Router) { 
+  constructor(public fb: FormBuilder, public alertController: AlertController, private router: Router,
+    private animationController: AnimationController) { 
 
     this.formularioLogin = this.fb.group({
       nombre: new FormControl("", Validators.required),
@@ -21,8 +23,25 @@ export class LoginPage implements OnInit {
 
 }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.setupAnimation();
+  }
 
+  setupAnimation() {
+    this.animation = this.animationController.create()
+      .addElement(document.querySelector('.SeekAlogo') as HTMLElement)
+      .duration(2000)
+      .iterations(Infinity)
+      .keyframes([
+        { offset: 0, transform: 'translateY(0)' },
+        { offset: 0.4, transform: 'translateY(-30px)' },
+        { offset: 0.6, transform: 'translateY(-15px)' },
+        { offset: 1, transform: 'translateY(0)' }
+      ]);
+  
+      this.animation.play();
+    }
+  
   registrarse() {
     this.router.navigate(['/registro']);
   }
