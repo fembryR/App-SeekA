@@ -66,15 +66,22 @@ export class LoginPage implements OnInit {
     }
 
     const { nombre, password } = this.formularioLogin.value;
-    const normalizedUsername = nombre.toLowerCase(); // Normaliza el nombre del usuario
+    const normalizedUsername = nombre.toLowerCase();
 
     // Verifica el usuario en Firestore
     const usuario = await this.firestoreService.getUserByCredentials(normalizedUsername, password);
 
     if (usuario) {
       console.log('Ingresado');
-      localStorage.setItem('usuarioActual', normalizedUsername);
+      localStorage.setItem('usuarioActual', normalizedUsername); // Solo guarda el nombre de usuario, no la contraseña
+      const sessionToken = `token-${Math.random().toString(36).substr(2)}`; // Simula token de sesion
+      localStorage.setItem('sessionToken', sessionToken); //Guardado de token de la sesion en local storage
+      const currentTime = new Date().toISOString(); // Guarda el último tiempo de inicio de sesion
+      localStorage.setItem('ultimoInicioSesion', currentTime);
+       
       console.log('Nombre guardado en localStorage:', normalizedUsername);
+      console.log('Token de sesión guardado:', sessionToken);
+      console.log('Último inicio de sesión guardado:', currentTime);
       this.router.navigate(['/home']);
     } else {
       const alert = await this.alertController.create({
@@ -84,5 +91,5 @@ export class LoginPage implements OnInit {
       });
       await alert.present();
     }
-  }
+}
 }

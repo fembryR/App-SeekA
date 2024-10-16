@@ -79,27 +79,27 @@ export class RegistroPage implements OnInit {
 
     // Guarda el usuario en Firestore
     this.firestoreService.createDoc(usuario)
-      .then(async () => {
-        console.log('Usuario registrado en Firestore:', usuario);
-        localStorage.setItem(nombre, JSON.stringify(usuario));
+  .then(async () => {
+    console.log('Usuario registrado en Firestore:', usuario);
+    localStorage.setItem('usuarioActual', nombre); // Guarda solo el nombre del usuario
 
-        const alert = await this.alertController.create({
-          header: 'Registro exitoso',
-          message: 'El usuario ha sido registrado correctamente.',
-          buttons: ['Aceptar']
-        });
-        await alert.present();
-        await alert.onDidDismiss(); // Espera a que el usuario cierre la alerta
-        this.router.navigate(['/login']); // Redirige a Login
-      })
-      .catch(async (error: any) => {
-        console.error('Error al registrar usuario en Firestore:', error);
-        const alert = await this.alertController.create({
-          header: 'Error',
-          message: 'Hubo un problema al registrar el usuario.',
-          buttons: ['Aceptar']
-        });
-        await alert.present();
-      });
+    const alert = await this.alertController.create({
+      header: 'Registro exitoso',
+      message: 'El usuario ha sido registrado correctamente.',
+      buttons: ['Aceptar']
+    });
+    await alert.present();
+    await alert.onDidDismiss(); 
+    this.router.navigate(['/login']);
+  })
+  .catch(async (error: any) => {
+    console.error('Error al registrar usuario en Firestore:', error);
+    const alert = await this.alertController.create({
+      header: 'Error',
+      message: 'Hubo un problema al registrar el usuario.',
+      buttons: ['Aceptar']
+    });
+    await alert.present();
+  });
   }
 }

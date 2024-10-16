@@ -29,7 +29,6 @@ export class RestablecerPage implements OnInit {
     const storedUser = localStorage.getItem(normalizedUsername);
 
     if (!storedUser) {
-      // Usuario no encontrado
       const alert = await this.alertController.create({
         header: 'Usuario no encontrado',
         message: 'No se encontró el usuario.',
@@ -37,18 +36,16 @@ export class RestablecerPage implements OnInit {
       });
       await alert.present();
     } else {
-      // Usuario encontrado, redirige a la página de login
       const alert = await this.alertController.create({
         header: 'Éxito',
-        message: 'Usuario encontrado. Redirigiendo a la página de login.',
+        message: 'Usuario encontrado. Redirigiendo a la página de restablecimiento de contraseña.',
         buttons: ['Aceptar']
       });
       await alert.present();
 
-      // Redirigir a la página de login
       this.router.navigate(['/login']);
     }
-  }
+}
 
   async mostrarError(message: string) {
     const alert = await this.alertController.create({
