@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup,FormControl,Validators,FormBuilder } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController, AnimationController } from '@ionic/angular';
+import { FirestoreService } from '../services/services/firestore.service'; // Asegúrate de importar tu servicio
 
 @Component({
   selector: 'app-login',
@@ -13,15 +14,18 @@ export class LoginPage implements OnInit {
   formularioLogin: FormGroup;
   animation: any;
 
-  constructor(public fb: FormBuilder, public alertController: AlertController, private router: Router,
-    private animationController: AnimationController) { 
-
+  constructor(
+    public fb: FormBuilder,
+    public alertController: AlertController,
+    private router: Router,
+    private animationController: AnimationController,
+    private firestoreService: FirestoreService // Inyecta el servicio Firestore
+  ) { 
     this.formularioLogin = this.fb.group({
       nombre: new FormControl("", Validators.required),
       password: new FormControl("", Validators.required)
-  })
-
-}
+    });
+  }
 
   ngOnInit() {
     this.setupAnimation();
@@ -39,14 +43,14 @@ export class LoginPage implements OnInit {
         { offset: 1, transform: 'translateY(0)' }
       ]);
   
-      this.animation.play();
-    }
-  
+    this.animation.play();
+  }
+
   registrarse() {
     this.router.navigate(['/registro']);
   }
 
-  restablecer(){
+  restablecer() {
     this.router.navigate(['/restablecer']);
   }
 
@@ -63,31 +67,19 @@ export class LoginPage implements OnInit {
 
     const { nombre, password } = this.formularioLogin.value;
     const normalizedUsername = nombre.toLowerCase(); // Normaliza el nombre del usuario
-    const usuarioString = localStorage.getItem(normalizedUsername);
 
-    if (!usuarioString) {
-      const alert = await this.alertController.create({
-        header: 'Usuario no encontrado',
-        message: 'No se encontró el usuario.',
-        buttons: ['Aceptar']
-      });
-      await alert.present();
-      return;
-    }
+    // Verifica el usuario en Firestore
+    const usuario = await this.firestoreService.getUserByCredentials(normalizedUsername, password);
 
-    const usuario = JSON.parse(usuarioString);
-
-    if (usuario.password === password) {
+    if (usuario) {
       console.log('Ingresado');
-
       localStorage.setItem('usuarioActual', normalizedUsername);
       console.log('Nombre guardado en localStorage:', normalizedUsername);
-
       this.router.navigate(['/home']);
     } else {
       const alert = await this.alertController.create({
         header: 'Datos incorrectos',
-        message: 'La contraseña es incorrecta.',
+        message: 'Nombre de usuario o contraseña incorrectos.',
         buttons: ['Aceptar']
       });
       await alert.present();

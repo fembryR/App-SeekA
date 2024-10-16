@@ -1,7 +1,10 @@
-import { Component } from '@angular/core';
-import {  Router } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
+import { Firestore, collection, collectionData } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
 
 interface Menu{
+
   icon: string;
   name: string;
   redirectTo: string;
@@ -14,6 +17,8 @@ interface Menu{
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
+  firestore: Firestore = inject(Firestore);
+  items$: Observable<any[]>;
   menu: Menu []=[
     {
       icon: "home-outline",
@@ -34,7 +39,10 @@ export class AppComponent {
     }
   ];
 
-  constructor(public router: Router) {}
+  constructor(public router: Router) {
+    const aCollection = collection(this.firestore, 'items')
+    this.items$ = collectionData(aCollection);
+  }
 
   logout() {
 
