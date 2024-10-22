@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController, AnimationController } from '@ionic/angular';
-import { FirestoreService } from '../services/services/firestore.service'; // Asegúrate de importar tu servicio
+import { FirestoreService } from '../services/services/firestore.service';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +19,7 @@ export class LoginPage implements OnInit {
     public alertController: AlertController,
     private router: Router,
     private animationController: AnimationController,
-    private firestoreService: FirestoreService // Inyecta el servicio Firestore
+    private firestoreService: FirestoreService
   ) { 
     this.formularioLogin = this.fb.group({
       nombre: new FormControl("", Validators.required),
@@ -29,6 +29,11 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {
     this.setupAnimation();
+    this.clearForm(); // Limpia el formulario al cargar la página
+  }
+
+  clearForm() {
+    this.formularioLogin.reset(); // Limpia los campos del formulario
   }
 
   setupAnimation() {
@@ -73,10 +78,10 @@ export class LoginPage implements OnInit {
 
     if (usuario) {
       console.log('Ingresado');
-      localStorage.setItem('usuarioActual', normalizedUsername); // Solo guarda el nombre de usuario, no la contraseña
-      const sessionToken = `token-${Math.random().toString(36).substr(2)}`; // Simula token de sesion
-      localStorage.setItem('sessionToken', sessionToken); //Guardado de token de la sesion en local storage
-      const currentTime = new Date().toISOString(); // Guarda el último tiempo de inicio de sesion
+      localStorage.setItem('usuarioActual', normalizedUsername);
+      const sessionToken = `token-${Math.random().toString(36).substr(2)}`;
+      localStorage.setItem('sessionToken', sessionToken);
+      const currentTime = new Date().toISOString();
       localStorage.setItem('ultimoInicioSesion', currentTime);
        
       console.log('Nombre guardado en localStorage:', normalizedUsername);
@@ -91,5 +96,5 @@ export class LoginPage implements OnInit {
       });
       await alert.present();
     }
-}
+  }
 }

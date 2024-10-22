@@ -17,13 +17,27 @@
       <ion-title size="large">Inicio</ion-title>
     </ion-toolbar>
   </ion-header>
-  
+
   <ion-img class="background-image"></ion-img>
 
-  
   <ion-grid>
     <ion-row>
       <ion-col>
+        <!-- Sección Clima -->
+        <ion-title size="small" style="text-align: center;">
+          <div *ngIf="clima" class="clima-container">
+            <p><strong>Clima</strong></p>
+            <p><strong>Ciudad:</strong> {{ clima.name }}</p>
+            <p style="margin: 0;">{{ (clima.main.temp - 273.15) | number: '1.0-0' }} °C</p>
+            <img
+              *ngIf="clima.weather[0].icon" 
+              [src]="'https://openweathermap.org/img/wn/' + clima.weather[0].icon + '@2x.png'" 
+              alt="Ícono del clima"
+              style="width: 40px; height: 40px;"
+            />
+          </div>
+        </ion-title>
+
         <div id="container">
           <h1>Bienvenido, {{ username }}</h1>
           <p>Gracias por usar nuestra aplicación para descubrir el arte urbano y los tesoros que esconde la ciudad.</p>
@@ -33,5 +47,53 @@
     </ion-row>
   </ion-grid>
 
-  <ion-img class="wolf_notfound"></ion-img>
+  <ion-grid class="cards-grid">
+    <ion-row>
+      <!-- Card 1 -->
+      <ion-col size="6">
+        <ion-card>
+          <ion-img src="assets/img/Estatua_vicuña.jpg" alt="Imagen 1"></ion-img>
+          <ion-card-content>
+            <ion-icon name="location-outline"></ion-icon>
+            <span>Estatua Benjamin Vicuña Mackenna</span>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+  
+      <!-- Card 2 -->
+      <ion-col size="6">
+        <ion-card>
+          <ion-img src="assets/img/Maria_sancristobal.jpg" alt="Imagen 2"></ion-img>
+          <ion-card-content>
+            <ion-icon name="location-outline"></ion-icon>
+            <span>Virgen Inmaculada Concepción</span>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  
+    <ion-row>
+      <!-- Card 3 -->
+      <ion-col size="6">
+        <ion-card>
+          <ion-img src="assets/img/Mural_nueva_providencia.jpg" alt="Imagen 3"></ion-img>
+          <ion-card-content>
+            <ion-icon name="location-outline"></ion-icon>
+            <span>Mural mujer nueva Providencia</span>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+  
+      <!-- Card 4 -->
+      <ion-col size="6">
+        <ion-card>
+          <ion-img src="assets/img/Plaza_de_Armas.jpg" alt="Imagen 4"></ion-img>
+          <ion-card-content>
+            <ion-icon name="location-outline"></ion-icon>
+            <span>Estatua Pedro de Valdivia</span>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

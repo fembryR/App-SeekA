@@ -32,13 +32,11 @@ export class FirestoreService {
     // Si el usuario existe, verificamos la contraseña
     if (!querySnapshot.empty) {
       const userData = querySnapshot.docs[0].data();
-      console.log('Datos del usuario:', userData); // Log de los datos del usuario
-      console.log('Contraseña ingresada:', password); // Log de la contraseña ingresada
   
       return userData['password'] === password ? userData : null;
     }
     
     console.log('Usuario no encontrado'); // Log si el usuario no existe
-  return null;
+    return null;
   }
 }
