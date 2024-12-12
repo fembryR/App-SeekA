@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Firestore, collection, collectionData } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { AuthService } from './services/services/auth.service'; // Asegúrate de importar el servicio
+import { ThemeService } from './services/theme.service';
 
 interface Menu {
   icon: string;
@@ -33,7 +34,7 @@ export class AppComponent {
     }
   ];
 
-  constructor(public router: Router, private authService: AuthService) {
+  constructor(public router: Router, private authService: AuthService, public themeService: ThemeService) {
     const aCollection = collection(this.firestore, 'items');
     this.items$ = collectionData(aCollection);
   }

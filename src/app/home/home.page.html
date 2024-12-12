@@ -3,6 +3,12 @@
     <ion-title style="text-align: center; padding-left: 90px;">
       SeekA
     </ion-title>
+    <ion-buttons slot="start">
+      <!-- Slide toggle para el tema -->
+      <ion-toggle (ionChange)="toggleDarkMode($event)" [checked]="isDarkMode"></ion-toggle>
+      <!-- Icono dinámico que cambia dependiendo del tema -->
+      <ion-icon [name]="isDarkMode ? 'moon' : 'sunny'"></ion-icon>
+    </ion-buttons>
     <ion-buttons slot="end">
       <ion-button (click)="mostrarMenu()">
         <ion-icon slot="end" name="menu-outline" size="large" color="dark"></ion-icon>
@@ -56,6 +62,7 @@
           <ion-card-content>
             <ion-icon name="location-outline"></ion-icon>
             <span>Estatua Benjamin Vicuña Mackenna</span>
+            <ion-button expand="full" (click)="tomarFoto()">Tomar Foto</ion-button>
           </ion-card-content>
         </ion-card>
       </ion-col>
@@ -67,6 +74,7 @@
           <ion-card-content>
             <ion-icon name="location-outline"></ion-icon>
             <span>Virgen Inmaculada Concepción</span>
+            <ion-button expand="full" (click)="tomarFoto()">Tomar Foto</ion-button>
           </ion-card-content>
         </ion-card>
       </ion-col>
@@ -80,6 +88,7 @@
           <ion-card-content>
             <ion-icon name="location-outline"></ion-icon>
             <span>Mural mujer nueva Providencia</span>
+            <ion-button expand="full" (click)="tomarFoto()">Tomar Foto</ion-button>
           </ion-card-content>
         </ion-card>
       </ion-col>
@@ -91,6 +100,7 @@
           <ion-card-content>
             <ion-icon name="location-outline"></ion-icon>
             <span>Estatua Pedro de Valdivia</span>
+            <ion-button expand="full" (click)="tomarFoto()">Tomar Foto</ion-button>
           </ion-card-content>
         </ion-card>
       </ion-col>

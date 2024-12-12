@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 import { Router } from '@angular/router';
 import { AlertController, AnimationController } from '@ionic/angular';
 import { FirestoreService } from '../services/services/firestore.service';
+import { ThemeService } from '../services/theme.service';
 
 @Component({
   selector: 'app-login',
@@ -13,18 +14,21 @@ export class LoginPage implements OnInit {
 
   formularioLogin: FormGroup;
   animation: any;
+  isDarkMode: boolean = false;
 
   constructor(
     public fb: FormBuilder,
     public alertController: AlertController,
     private router: Router,
     private animationController: AnimationController,
-    private firestoreService: FirestoreService
+    private firestoreService: FirestoreService,
+    public themeService: ThemeService
   ) { 
     this.formularioLogin = this.fb.group({
       nombre: new FormControl("", Validators.required),
       password: new FormControl("", Validators.required)
     });
+    this.isDarkMode = document.body.classList.contains('dark');
   }
 
   ngOnInit() {
@@ -57,6 +61,12 @@ export class LoginPage implements OnInit {
 
   restablecer() {
     this.router.navigate(['/restablecer']);
+  }
+
+  toggleDarkMode(event: any): void {
+    const isDarkMode = event.detail.checked;
+    document.body.classList.toggle('dark', isDarkMode);
+    this.isDarkMode = isDarkMode; // Actualiza el estado del tema
   }
 
   async ingresar() {

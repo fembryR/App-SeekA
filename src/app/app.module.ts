@@ -13,7 +13,9 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getDatabase, provideDatabase } from '@angular/fire/database';
 import { getStorage, provideStorage } from '@angular/fire/storage';
 import { getRemoteConfig, provideRemoteConfig } from '@angular/fire/remote-config';
-import { environment } from '../environments/environment';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+
 
 
 
@@ -21,7 +23,7 @@ import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,MatToolbarModule,MatSlideToggleModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, provideAnimationsAsync(), provideFirebaseApp(() => initializeApp({"projectId":"seekaappmovil","appId":"1:1039366883046:web:0f1bc1a2d0489739541d27","storageBucket":"seekaappmovil.appspot.com","apiKey":"AIzaSyDLqx4vqbCyHrlRYqKccowvm8-xa9K9de4","authDomain":"seekaappmovil.firebaseapp.com","messagingSenderId":"1039366883046","measurementId":"G-SKT1EE985N"})), provideAuth(() => getAuth()), provideFirestore(() => getFirestore()), provideDatabase(() => getDatabase()), provideStorage(() => getStorage()), provideRemoteConfig(() => getRemoteConfig())],
   bootstrap: [AppComponent],
 })

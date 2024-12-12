@@ -25,6 +25,17 @@
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
 
+body.dark {
+    --ion-background-color: #121212;
+    --ion-text-color: #ffffff;
+    --ion-toolbar-background: #1e1e1e;
+    --ion-toolbar-color: #ffffff;
+    --ion-card-background: #1e1e1e;
+    --ion-input-background: #2c2c2c;
+    --ion-input-color: #ffffff;
+    --ion-item-background: #2c2c2c;
+  }
+
 /**
  * Ionic Dark Mode
  * -----------------------------------------------------
